@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper font-sans text-base leading-relaxed text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+
+  :focus-visible {
+    outline: 3px solid theme('colors.brand.600');
+    outline-offset: 2px;
+  }
+
+  /* Giảm chuyển động theo cài đặt hệ điều hành của người dùng */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-brand-700 text-white hover:bg-brand-800;
+  }
+  .btn-secondary {
+    @apply border border-edge bg-white text-ink hover:bg-brand-50;
+  }
+  .btn-danger {
+    @apply bg-rose-700 text-white hover:bg-rose-800;
+  }
+  .btn-ghost {
+    @apply text-ink-soft hover:bg-brand-100;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-edge bg-white px-3.5 py-2.5 text-base text-ink placeholder:text-ink-mute;
+  }
+  .field[aria-invalid='true'] {
+    @apply border-rose-700 bg-rose-50;
+  }
+
+  .chip {
+    @apply inline-flex min-h-[44px] items-center rounded-full border border-edge bg-white px-4 text-sm font-medium text-ink-soft transition-colors hover:bg-brand-50;
+  }
+  .chip[aria-pressed='true'] {
+    @apply border-brand-700 bg-brand-700 text-white hover:bg-brand-800;
+  }
+
+  /* Nút "Bỏ qua tới nội dung": chỉ hiện khi nhận focus bàn phím */
+  .skip-link {
+    @apply absolute left-3 top-3 z-[100] -translate-y-24 rounded-lg bg-brand-900 px-4 py-2 text-sm font-semibold text-white focus:translate-y-0;
+  }
+}
