@@ -86,6 +86,28 @@ Dự án có sẵn `render.yaml` (Blueprint), `.node-version` (Node 20) và `pac
 
 Nếu đổi tên service hoặc dùng nhánh khác `main`, sửa `name` / `branch` trong `render.yaml`.
 
+**Cách 3: Lỡ tạo Web Service (Node) thay vì Static Site**
+
+Vẫn chạy được, vì `vite.config.ts` đã cấu hình `preview` nghe `0.0.0.0`, đúng cổng `$PORT` của
+Render và cho phép tên miền `*.onrender.com`. Điền:
+
+- Build Command: `npm ci && npm run build`
+- Start Command: `npm start`
+- Environment Variable: `NODE_VERSION` = `20`
+
+(Gói Free của Web Service sẽ "ngủ" sau 15 phút không ai vào, lần mở đầu chờ khoảng 50 giây.
+Static Site không bị vậy, nên ưu tiên Cách 1 hoặc 2.)
+
+**Lỗi hay gặp trên Render**
+
+| Log / hiện tượng | Nguyên nhân | Cách sửa |
+| --- | --- | --- |
+| `No open ports detected`, `Missing script: "start"` | Tạo Web Service mà thiếu start / sai cổng | Dùng Static Site, hoặc Cách 3 |
+| Trang chỉ hiện `Blocked request. This host ... is not allowed` | `vite preview` chặn host lạ | Đã sửa trong `vite.config.ts` |
+| `Could not read package.json`, `ENOENT` | Code nằm trong thư mục con của repo | Điền **Root Directory** = tên thư mục con (hoặc `rootDir` trong `render.yaml`) |
+| `npm ci` báo lockfile không khớp | Chưa commit `package-lock.json` hoặc sửa `package.json` mà chưa `npm install` | Chạy `npm install` rồi commit cả lockfile |
+| Bấm F5 ở `/item/...` ra 404 | Thiếu rewrite SPA | Thêm rule Rewrite `/*` → `/index.html` |
+
 ### Vercel / Netlify
 
 Vẫn giữ `vercel.json` và `public/_redirects` nếu muốn deploy ở đó.

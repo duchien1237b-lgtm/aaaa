@@ -4,7 +4,9 @@ services:
   - type: web
     runtime: static
     name: so-chi-tieu-6651071062
-    branch: main
+    # Không ghi branch: Render dùng nhánh mặc định của repo (main hay master đều được).
+    # Nếu code nằm trong thư mục con của repo, bỏ dấu # ở dòng dưới và sửa tên thư mục:
+    # rootDir: 6651071062_LAB2
     buildCommand: npm ci && npm run build
     staticPublishPath: ./dist
     pullRequestPreviewsEnabled: false
